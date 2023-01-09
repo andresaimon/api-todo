@@ -10,15 +10,16 @@ import (
 	"github.com/silastgoes/API-To-Do-List/models"
 )
 
+// Função para filtrar por status (true ou false):
 func Get(w http.ResponseWriter, r *http.Request) {
-	id, err := strconv.Atoi(chi.URLParam(r, "id"))
+	done, err := strconv.ParseBool(chi.URLParam(r, "done"))
 	if err != nil {
 		log.Printf("Erro ao fazer parse do id: %v", err)
 		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 		return
 	}
 
-	todo, err := models.Get(int64(id))
+	todo, err := models.Get(done)
 	if err != nil {
 		log.Printf("Erro ao atualizar registro: %v", err)
 		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)

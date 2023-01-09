@@ -9,6 +9,7 @@ import (
 	"github.com/silastgoes/API-To-Do-List/handlers"
 )
 
+// Criação do server:
 func main() {
 
 	err := configs.Load()
@@ -17,11 +18,13 @@ func main() {
 	}
 
 	r := chi.NewRouter()
+
+	// declaração das rotas:
 	r.Post("/", handlers.Create)
 	r.Put("/{id}", handlers.Update)
 	r.Delete("/{id}", handlers.Delete)
 	r.Get("/", handlers.List)
-	r.Get("/{id}", handlers.Get)
+	r.Get("/{done}", handlers.Get)
 
 	http.ListenAndServe(fmt.Sprintf(":%s", configs.GetServerPort()), r)
 }

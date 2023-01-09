@@ -2,17 +2,35 @@ package models
 
 import "github.com/silastgoes/API-To-Do-List/db"
 
-// busca de apenas uma tarefa cadastrada no banco:
-func Get(id int64) (todo Todo, err error) {
+// Busca de tarefas por status (true ou false):
+func Get(done bool) (todos []Todo, err error) {
+	// abrindo conexão com o banco de dados:
 	conn, err := db.OpenConnection()
+
+	// validando o tipo de erro:
 	if err != nil {
 		return
 	}
+
+	// fechando a conexão com o banco de dados:
 	defer conn.Close()
 
-	row := conn.QueryRow(`SELECT * FROM todos WHERE id=$1`, id)
+	// SQL a ser executado:
+	rows, err := conn.Query(`SELECT * FROM todos WHERE done=$1`, done)
+	if err != nil {
+		return
+	}
 
-	err = row.Scan(&todo.ID, &todo.Title, &todo.Description, &todo.Done)
+	// seleciona os itens adicionados ao banco de dados:
+	for rows.Next() {
+		var todo Todo
+		err = rows.Scan(&todo.ID, &todo.Title, &todo.Description, &todo.Done)
+		if err != nil {
+			continue
+		}
+
+		todos = append(todos, todo)
+	}
 
 	return
 }

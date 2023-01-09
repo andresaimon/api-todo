@@ -8,6 +8,7 @@ import (
 	"github.com/silastgoes/API-To-Do-List/models"
 )
 
+// Função para retornar todos os registros:
 func List(w http.ResponseWriter, r *http.Request) {
 	todos, err := models.GetAll()
 	if err != nil {

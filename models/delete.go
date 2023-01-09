@@ -2,18 +2,25 @@ package models
 
 import "github.com/silastgoes/API-To-Do-List/db"
 
-// deletar tarefas:
+// Deletar tarefas:
 func Delete(id int64) (int64, error) {
+	// abrindo a conexão:
 	conn, err := db.OpenConnection()
+
+	// validando o erro:
 	if err != nil {
 		return 0, err
 	}
+
+	// fechando a conexão:
 	defer conn.Close()
-	//$1, $2, $3 e $4 referem-se à ordem definida nos parâmetros em seguida
+
+	/// query SQL para realizar o Delete:
 	res, err := conn.Exec(`DELETE FROM todos WHERE id=$1`, id)
 	if err != nil {
 		return 0, err
 	}
 
+	// retorna o número de linhas que foram deletadas:
 	return res.RowsAffected()
 }

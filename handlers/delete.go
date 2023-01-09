@@ -10,6 +10,7 @@ import (
 	"github.com/silastgoes/API-To-Do-List/models"
 )
 
+// Função para deletar registros:
 func Delete(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.Atoi(chi.URLParam(r, "id"))
 	if err != nil {

@@ -4,7 +4,7 @@ import "github.com/spf13/viper"
 
 var cfg *config
 
-// definição das structs:
+// Definição das structs:
 type config struct {
 	API APIConfig
 	DB  DBConfig
@@ -22,7 +22,7 @@ type DBConfig struct {
 	Database string
 }
 
-// definição de valores padrões através do pacote viper
+// Definição de valores padrões através do pacote viper
 // api.port, database.host e database.port: chaves de configuração
 func init() {
 	viper.SetDefault("api.port", "9000")
@@ -30,29 +30,31 @@ func init() {
 	viper.SetDefault("database.port", "5432")
 }
 
-// função que carrega as configurações:
-// a função retorna um erro, caso não seja possivel carregar as configurações
+// Função que carrega as configurações:
+// a função retorna um erro, caso não seja possível carregar as configurações
 // define-se o nome, o tipo e o local do arquivo
 func Load() error {
 	viper.SetConfigName("config")
 	viper.SetConfigType("toml")
 	viper.AddConfigPath(".")
 	err := viper.ReadInConfig()
-	//validação do tipo de erro ocorrido:
+
+	// Validação do tipo de erro ocorrido:
 	if err != nil {
 		if _, ok := err.(viper.ConfigFileNotFoundError); !ok {
 			return err
 		}
 	}
 
-	//criação de um ponteiro da struct:
+	// Criação de um ponteiro da struct:
 	cfg = new(config)
 
-	//para atribuir o dado dentro da struct:
+	// Para atribuir o dado dentro da struct:
 	cfg.API = APIConfig{
 		Port: viper.GetString("api.port"),
 	}
 
+	// Carregando informações configuradas:
 	cfg.DB = DBConfig{
 		Host:     viper.GetString("database.host"),
 		Port:     viper.GetString("database.port"),
@@ -64,12 +66,14 @@ func Load() error {
 	return nil
 }
 
-// função para retornar o objeto de configuração do banco:
+// Para acessar as informações:
+
+// função para retornar o objeto de configuração do banco de dados:
 func GetDB() DBConfig {
 	return cfg.DB
 }
 
-// função para retornar a porta
+// função para retornar a porta:
 func GetServerPort() string {
 	return cfg.API.Port
 }

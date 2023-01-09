@@ -1,49 +1,68 @@
 ## Teste Sipub Tech
 
- O propósito deste teste é criar uma aplicação web com foco no back-end, utilizando todo o poder da linguagem Go. Nesta aplicação, o foco é em organizar as tarefas do dia-a-dia. Assim, essa aplicação consiste na criação de uma API Rest para um projeto de um TO-DO List sincronizado com um banco de dados de sua preferência. 
+Configurações:
 
- Fique livre para utilizar qualquer o banco de sua preferência, como: Postgres, MySQL, SQLite e MongoDB. Neste caso, você estará construindo uma API para que outras aplicações integrem com a sua. Aqui você vai mostrar seu talento para um projeto em backend, onde a boa performance e o bom funcionamento são os pontos que importam. Se você tiver conhecimento de testes de software, ﬁque a vontade para criar casos de testes e cobrir seu código, esse é um ponto opcional para o desenvolvimento da sua aplicação.
+A solução foi desenvolvida através do Sistema Operacional Ubuntu 20.04.5 LTS; <br>
+A IDE utilizada foi o VS Code, versão 1.74.2, sendo adicionadas extensões para o Docker e o Go; <br>
+Foi utilizado o Docker versão 20.10.22 e o Go versão 1.19.4.<br>
+
+Para levantar o container do Postgres, utilizou-se o comando: <br>
+``` docker run -d --name api-todo  -p 5432:5432 -e POSTGRES_PASSWORD=1234 postgres:13.5 ```<br>
+
+Para conectar com o container:<br>
+```docker exec -it api-todo psql -U postgres```<br>
+
+Para criar o database:<br>
+```create database api_todo;```<br>
+
+Para criar um usuário:<br>
+```create user user_todo;```<br>
+
+Para definir uma senha para o usuário criado:<br>
+```alter user user_todo with encrypted password ‘1122’;```<br>
+
+Para dar permissão para o usuário utilizar o database:<br>
+```grant all privileges on database api_todo to user_todo;```<br>
+
+Para conectar com o database:<br>
+```\c api_todo;```<br>
  
+Para a criação da tabela de tarefas (todos):<br>
+```create table todos (id serial primary key, title varchar, description text, done bool default FALSE);```<br>
+
+Para dar permissão para o usuário gravar dados no banco:<br>
+```grant all privileges on table todos to user_todo;```<br>
+
+Para realizar a importação das bibliotecas utilizadas no projeto:<br>
+```go mod tidy```<br>
+
+Para rodar o servidor:<br>
+```go run main.go```<br>
+
+O arquivo config.toml possui as configurações da API e do banco de dados Postgres<br>
+<br>
  ### Requisitos
 
- A sua API Rest deve possuir endpoints que dê suporte às seguintes ações: 
-
-
-- O usuário pode criar/editar tarefas;
-- O usuário pode deletar tarefas;
-- O usuário pode listar todas as suas tarefas ou aplicar ﬁltro de status;
-- O usuário pode completar tarefas, que são movidas para uma outra listagem;
-- O usuário pode restaurar tarefas já completadas, fazendo assim com que elas
-voltem para a listagem principal;
-
-Como esse projeto precisa ser mantido futuramente (assim como qualquer outro ), seja por você ou por outro membro da equipe, uma documentação é necessária. Então escreva a documentação da forma que achar necessário e suﬁciente para um outro desenvolvedor continuar o projeto. A Documentação das APIs devem ser feitas a partir do swagger.
-
-Para esse teste, preferimos que você não utilize frameworks que possuem implementações de API e comunicação de banco de dados prontas, preferimos que você as implemente do zero. Para a utilização das APIs, é essencial o uso do Postman para testes e utilização, então tal arquivo deve ser fornecido no repositório para que qualquer pessoa consiga executá-las.
-
-## Projeto Prévio 
-
-O projeto já contem um arquivo `Dockerfile` para criação de um container `Go` e um server preliminar com um único endpoint mostrando data e hora atual.
-
-É necessário que o candidato tenha o docker instalado
-
-##
-
-Para criar a imagem 
-
-1.
-``` bash
-sudo docker build -t application-server .
+A solução foi implementada através de um CRUD, estruturado em 4 packages:<br>
+<br>
+DB: realiza a conexão com o banco de dados;<br>
+CONFIGS: recebe as configurações do servidor;<br>
+HANDLERS: recebe as chamadas das API e trata as chamadas; e<br>
+MODELS: realiza transações com o banco de dados.<br>
+<br>
+ 
+O arquivo API-todo.postman_collection.json contém as requisições necessárias para atender aos parâmetros propostos.
+<br>
+<br>
+- Para criar tarefas: método POST + JSON
 ```
-
-Para iniciar o server 
-
-``` bash
-sudo docker run -it --rm -p 5050:5050 application-server
+{
+    "title": "tarefa 1",
+    "description": "descrição 1",
+    "done": true
+}
 ```
-
-2.
-Ou com auxilio do script
-
-``` bash
-sudo sh init.sh
-```
+- Para editar tarefas: método PUT + ID + JSON (o usuário pode escolher qual item deseja editar, inclusive a mudança de status entre true ou false)
+- Para deletar tarefas: método DELETE + ID
+- Para listar todas as tarefas: método GET_ALL
+- Para aplicar filtro de status: método GET_STATUS + STATUS (true ou false)
