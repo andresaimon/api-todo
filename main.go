@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/andresaimon/api-todo/configs"
+	"github.com/andresaimon/api-todo/handlers"
 	"github.com/go-chi/chi/v5"
-	"github.com/silastgoes/API-To-Do-List/configs"
-	"github.com/silastgoes/API-To-Do-List/handlers"
 )
 
 // Criação do server:

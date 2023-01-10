@@ -1,6 +1,6 @@
 package models
 
-import "github.com/silastgoes/API-To-Do-List/db"
+import "github.com/andresaimon/api-todo/db"
 
 // Abrindo conexão com o banco de dados e inserindo dados:
 func Insert(todo Todo) (id int64, err error) {

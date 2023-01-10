@@ -1,6 +1,6 @@
 package models
 
-import "github.com/silastgoes/API-To-Do-List/db"
+import "github.com/andresaimon/api-todo/db"
 
 // Busca de tarefas por status (true ou false):
 func Get(done bool) (todos []Todo, err error) {

@@ -6,7 +6,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/silastgoes/API-To-Do-List/models"
+	"github.com/andresaimon/api-todo/models"
 )
 
 // Rota para criar uma nova entrada no banco de dados:

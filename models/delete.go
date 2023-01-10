@@ -1,6 +1,6 @@
 package models
 
-import "github.com/silastgoes/API-To-Do-List/db"
+import "github.com/andresaimon/api-todo/db"
 
 // Deletar tarefas:
 func Delete(id int64) (int64, error) {

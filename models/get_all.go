@@ -1,6 +1,6 @@
 package models
 
-import "github.com/silastgoes/API-To-Do-List/db"
+import "github.com/andresaimon/api-todo/db"
 
 // Busca de todas as tarefas cadastrada no banco de dados:
 // retorna um slice de tarefas

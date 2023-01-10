@@ -1,6 +1,6 @@
 package models
 
-import "github.com/silastgoes/API-To-Do-List/db"
+import "github.com/andresaimon/api-todo/db"
 
 // Atualizando tarefas:
 // função para receber como parâmetro o ID e os itens cadastrados

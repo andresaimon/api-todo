@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/silastgoes/API-To-Do-List/models"
+	"github.com/andresaimon/api-todo/models"
 )
 
 // Função para retornar todos os registros:

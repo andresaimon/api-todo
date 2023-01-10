@@ -1,4 +1,4 @@
-module github.com/silastgoes/API-To-Do-List
+module github.com/andresaimon/api-todo
 
 go 1.18
 

@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/andresaimon/api-todo/models"
 	"github.com/go-chi/chi/v5"
-	"github.com/silastgoes/API-To-Do-List/models"
 )
 
 // Os valores recebidos pela URL são strings

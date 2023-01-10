@@ -5,8 +5,8 @@ import (
 	"fmt"
 
 	// Definição do drive do Postgres:
+	"github.com/andresaimon/api-todo/configs"
 	_ "github.com/lib/pq"
-	"github.com/silastgoes/API-To-Do-List/configs"
 )
 
 // Função para abrir conexão com o banco de dados:
